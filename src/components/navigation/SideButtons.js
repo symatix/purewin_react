@@ -7,6 +7,9 @@ import MoreVert from 'material-ui-icons/MoreVert';
 import menuStyle from '../../styles/MenuButton';
 import sideNavData from '../../config/sideNav_data';
 
+
+
+
 class SideButtons extends Component {
     constructor(props){
         super(props);
@@ -27,22 +30,21 @@ class SideButtons extends Component {
 
     renderSideNav(){
         const { classes } = this.props;
-
+        const location = window.location.pathname;
+        
         return sideNavData.map(({label, url, subKey, sub}) => {
 
             if (!subKey) {
                 // if simple url button
                 return (
                         <ListItem 
+                            className={location === url? classes.active : ''} 
                             key={label} 
                             button 
                             component={Link} 
                             to={url}
                             >
-                            <ListItemText 
-                                className={classes.menuStyle} 
-                                primary={label}
-                                />
+                            <ListItemText primary={label} />
                         </ListItem>
                 )
             } else {
@@ -66,6 +68,7 @@ class SideButtons extends Component {
                             {sub.map(({label, url}, i) => {
                                 return(
                                     <ListItem 
+                                        className={location === url? classes.active : ''} 
                                         key={label+i} 
                                         button 
                                         component={Link} 
