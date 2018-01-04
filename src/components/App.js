@@ -1,11 +1,14 @@
 import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import Nav from './navigation/Nav';
-import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
+import Routes from './Routes';
 
 const App = (props) => {
     return(
         <div>
-            <Nav content={<KeyboardArrowRight />}/>
+            <BrowserRouter className="App">
+                <Nav content={<Routes />}/>
+            </BrowserRouter>
         </div>
     )
 }

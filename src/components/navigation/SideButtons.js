@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {withStyles} from 'material-ui/styles';
+import { Link } from 'react-router-dom';
 import Collapse from 'material-ui/transitions/Collapse';
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import MoreVert from 'material-ui-icons/MoreVert';
@@ -32,25 +33,48 @@ class SideButtons extends Component {
             if (!subKey) {
                 // if simple url button
                 return (
-                    <ListItem key={label} button>
-                        <ListItemText className={classes.menuStyle} primary={label}/>
-                    </ListItem>
+                        <ListItem 
+                            key={label} 
+                            button 
+                            component={Link} 
+                            to={url}
+                            >
+                            <ListItemText 
+                                className={classes.menuStyle} 
+                                primary={label}
+                                />
+                        </ListItem>
                 )
             } else {
                 // if submenu
                 return (
                     <div key={label}>
-                        <ListItem button onClick={() => this.toggleSub(subKey)} >
+                        <ListItem 
+                            button 
+                            onClick={() => this.toggleSub(subKey)} 
+                            >
                             <ListItemText primary={label}/>
                             <ListItemIcon>
                                 <MoreVert/>
                             </ListItemIcon>
                         </ListItem>
-                        <Collapse in={this.state[subKey]} transitionduration="auto" unmountOnExit>
-                            {sub.map(({label}, i) => {
+                        <Collapse 
+                            in={this.state[subKey]} 
+                            transitionduration="auto" 
+                            unmountOnExit
+                            >
+                            {sub.map(({label, url}, i) => {
                                 return(
-                                    <ListItem key={label+i} button>
-                                        <ListItemText secondary={label} className={classes.subNav} />
+                                    <ListItem 
+                                        key={label+i} 
+                                        button 
+                                        component={Link} 
+                                        to={url}
+                                        >
+                                        <ListItemText 
+                                            secondary={label} 
+                                            className={classes.subNav} 
+                                            />
                                     </ListItem>
                                 )
                             })}

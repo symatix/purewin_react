@@ -2,7 +2,6 @@ const drawerWidth = 240;
 const sideNavStyle = theme => ({
     drawerPaper: {
         position: 'relative',
-        height: '100%',
         width: drawerWidth,
     },
     drawerHeader: {

@@ -1,7 +1,7 @@
 export default [
     {
         label:'Dashboard',
-        url: '/dashboard'
+        url: '/'
     },
     {
         label:'Terms',
@@ -26,16 +26,20 @@ export default [
         url:'/workflow'
     },
     {
-        label: 'Campaign',
+        label: 'Campaigns',
         subKey:'campaigns',
         sub:[
             {
-                label:'New campaign',
-                url:'/campaign/new'
+                label: 'Overview',
+                url: '/campaigns/overview'
             },
             {
                 label: 'Active campaigns',
-                url: '/campaign/active'
+                url: '/campaigns/active'
+            },
+            {
+                label:'New campaign',
+                url:'/campaigns/new'
             }
         ]
     },

@@ -5,7 +5,7 @@ const drawerWidth = 240;
 const navStyle = theme => ({
     root: {
         width: '100%',
-        height: 430,
+        minHeight: '100%',
         zIndex: 1,
         overflow: 'hidden'
     },
