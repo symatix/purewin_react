@@ -14,3 +14,10 @@ main{
   padding: 100px;
 }
 
+/* override bottom-left graph control */
+#GraphControls{
+  position:absolute;
+  top:60px;
+  left:50% !important;
+  transform:translateX(-50%);
+}

@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "d3": "^4.12.2",
     "material-ui": "^1.0.0-beta.26",
     "material-ui-icons": "^1.0.0-beta.17",
+    "radium": "^0.19.6",
     "react": "^16.2.0",
+    "react-digraph": "^2.0.4",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
