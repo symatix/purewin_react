@@ -42,15 +42,15 @@ const sample = {
     },
     {
       "id": 3,
-      "title": "True",
-      "x": 800,
-      "y": 100,
+      "title": "False",
+      "x": 100,
+      "y": 450,
       "type": EMPTY_TYPE
     },
     {
       "id": 4,
-      "title": "False",
-      "x": 450,
+      "title": "True",
+      "x": 800,
       "y": 450,
       "type": EMPTY_TYPE
     }
