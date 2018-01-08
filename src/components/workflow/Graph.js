@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import GraphView from 'react-digraph/dist/components/graph-view'
 import GraphConfig from './graph-config.js' // Configures node/edge types
+import FormDialog from '../elements/FormDialog';
+import GraphToolbar from './GraphToolbar';
 
 const styles = {
   graph: {
@@ -16,7 +18,7 @@ const NODE_KEY = "id" // Key used to identify nodes
 // so this has to be passed in if that behavior is desired.
 const EMPTY_TYPE = "empty"; // Empty node type
 const SPECIAL_TYPE = "special"; 
-const SPECIAL_CHILD_SUBTYPE = "specialChild";
+//const SPECIAL_CHILD_SUBTYPE = "specialChild";
 const EMPTY_EDGE_TYPE = "emptyEdge";
 const SPECIAL_EDGE_TYPE = "specialEdge";
 
@@ -80,6 +82,9 @@ class Graph extends Component {
     super(props);
 
     this.state = {
+      dialog:{
+        open:false,
+      },
       graph: sample,
       selected: {}
     }
@@ -156,7 +161,7 @@ class Graph extends Component {
     }
 
     graph.nodes.push(viewNode);
-    this.setState({graph: graph});
+    this.setState({graph: graph, selected: {}});
   }
 
   // Deletes a node from the graph
@@ -193,7 +198,7 @@ class Graph extends Component {
     // Only add the edge when the source node is not the same as the target
     if (viewEdge.source !== viewEdge.target) {
       graph.edges.push(viewEdge);
-      this.setState({graph: graph});
+      this.setState({graph: graph, selected: {}});
     }
   }
 
@@ -218,6 +223,54 @@ class Graph extends Component {
     this.setState({graph: graph, selected: {}});
   }
 
+
+  newNodeDialog = () => {
+    this.setState({dialog:{open:true}});
+  }
+
+  addNewNode = (title, node, cancle) => {
+    if (cancle){
+      this.setState({dialog:{open:false}});
+      return false;
+    }
+    const type = node === "logic" ? SPECIAL_TYPE : EMPTY_TYPE;
+    const graph = this.state.graph;
+    const viewNode = {
+      id: this.state.graph.nodes.length + 1,
+      title: title,
+      type: type,
+      x: 200,
+      y: 200
+    }
+
+    graph.nodes.push(viewNode);
+    this.setState({graph: graph, selected: {}, dialog:{open:false}});
+  }
+
+
+  addCircle = event => {
+    const graph = this.state.graph;
+    const title = prompt("Node Title")
+    const viewNode = {
+      id: this.state.graph.nodes.length + 1,
+      title: title,
+      type: EMPTY_TYPE,
+      x: 200,
+      y: 200
+    }
+
+    graph.nodes.push(viewNode);
+    this.setState({graph: graph, selected: {}});
+  }
+  onDelete = () => {
+    const {selected} = this.state;
+    if (Object.keys(selected).length !== 0){
+      selected.source || selected.target
+      ? this.onDeleteEdge(selected)
+      : this.onDeleteNode(selected);
+    }
+  }
+
   /*
    * Render
    */
@@ -227,14 +280,17 @@ class Graph extends Component {
     const edges = this.state.graph.edges;
     const selected = this.state.selected;
 
+    console.log(this.GraphView)
+
     const NodeTypes = GraphConfig.NodeTypes;
     const NodeSubtypes = GraphConfig.NodeSubtypes;
     const EdgeTypes = GraphConfig.EdgeTypes;
-
     return (
+      <div>
       <div id='graph' style={styles.graph}>
       
         <GraphView  ref={(el) => this.GraphView = el}
+                    onDoubleClick={()=> alert("alo")}
                     nodeKey={NODE_KEY}
                     emptyType={EMPTY_TYPE}
                     nodes={nodes}
@@ -252,6 +308,14 @@ class Graph extends Component {
                     onCreateEdge={this.onCreateEdge}
                     onSwapEdge={this.onSwapEdge}
                     onDeleteEdge={this.onDeleteEdge}/>
+      </div>
+      <FormDialog open={this.state.dialog.open} newNode={this.addNewNode} zoomToFit={()=>{}}  />
+      
+      <GraphToolbar 
+        addNew={this.newNodeDialog.bind(this)} 
+        deleteElement={this.onDelete.bind(this)}
+        zoomToFit={this.GraphView ? this.GraphView.handleZoomToFit.bind(this) :  false}
+        />
       </div>
     );
   }
